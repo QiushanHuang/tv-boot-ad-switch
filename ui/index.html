@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self'; style-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; connect-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'none'">
+  <title>电视开机助手</title>
+  <link rel="stylesheet" href="app.css">
+  <script defer src="state.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <header class="appbar">
+    <div class="brand"><img src="icons/tv-minimal.svg" alt=""><span>电视开机助手</span></div>
+    <details class="help" id="help">
+      <summary aria-label="连接帮助" aria-describedby="help-tip"><img src="icons/info.svg" alt=""></summary>
+      <div class="help-popover" id="help-tip" role="tooltip">
+        <strong>电视端设置</strong>
+        <p>关于 → 产品型号，连续按确认键 7 次。</p>
+        <p>账号与安全 → 允许 ADB 调试。出现授权提示时选择允许。</p>
+        <p>完成后可关闭 ADB 调试。</p>
+      </div>
+    </details>
+  </header>
+
+  <main class="content">
+    <section class="panel" id="connect-screen" aria-labelledby="connect-title">
+      <h1 id="connect-title" tabindex="-1">连接电视</h1>
+      <form id="connect-form" novalidate>
+        <label for="tv-ip">电视 IP</label>
+        <div class="input-row">
+          <input id="tv-ip" name="tv-ip" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" placeholder="192.168.1.20" aria-describedby="connect-message">
+          <button class="button secondary search-button" id="discover" type="button"><img src="icons/search.svg" alt=""><span>搜索电视</span></button>
+        </div>
+        <p class="selected-device" id="selected-device" hidden></p>
+        <div class="device-choice" id="device-choice" hidden>
+          <label for="tv-list">选择电视</label>
+          <select id="tv-list"><option value="">请选择电视</option></select>
+        </div>
+        <p class="message" id="connect-message" role="status" aria-live="polite" hidden></p>
+        <button class="button primary main-action" id="connect" type="submit" disabled>连接电视</button>
+      </form>
+    </section>
+
+    <section class="panel result-panel" id="result-screen" aria-labelledby="result-title" hidden>
+      <button class="back" id="back" type="button"><img src="icons/arrow-left.svg" alt=""><span>更换电视</span></button>
+      <h1 id="result-title" tabindex="-1">开机广告</h1>
+      <p class="device-meta" id="device-meta"></p>
+      <div class="result-state" aria-live="polite">
+        <img id="state-icon" src="icons/circle-check.svg" alt="">
+        <div><h2 id="state-heading"></h2><p id="state-detail" hidden></p></div>
+      </div>
+      <p class="message" id="result-message" role="status" aria-live="polite" hidden></p>
+      <button class="button primary main-action" id="disable" type="button" hidden>关闭开机广告</button>
+      <div class="result-actions">
+        <button class="text-button" id="recheck" type="button">重新检测</button>
+        <button class="text-button" id="restore" type="button" hidden>恢复原设置</button>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="restore-dialog" aria-labelledby="restore-title" aria-describedby="restore-description">
+    <h2 id="restore-title">恢复原设置？</h2>
+    <p id="restore-description">恢复后可能重新显示开机广告。</p>
+    <div class="dialog-actions">
+      <button class="button secondary" id="cancel-restore" type="button">取消</button>
+      <button class="button primary" id="confirm-restore" type="button">恢复</button>
+    </div>
+  </dialog>
+</body>
+</html>

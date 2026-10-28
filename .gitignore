@@ -1,0 +1,11 @@
+build/
+dist/
+.venv/
+__pycache__/
+*.py[cod]
+.DS_Store
+*.apk
+*.pem
+*.key
+adbkey*
+.env
